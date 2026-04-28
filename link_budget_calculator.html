@@ -487,9 +487,12 @@ Link Margin = Eb/N₀_rx − Eb/N₀_req − L_impl</div>
           <!-- Slant range line -->
           <line id="geo-line" x1="55" y1="153" x2="155" y2="30" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"/>
 
-          <!-- Elevation angle arc -->
-          <path d="M 75 153 A 20 20 0 0 1 66 137" fill="none" stroke="#16a34a" stroke-width="1.5"/>
-          <text x="82" y="143" font-size="7" fill="#16a34a" id="geo-el-label">el</text>
+          <!-- Local horizon reference at GS -->
+          <line x1="55" y1="153" x2="88" y2="153" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+
+          <!-- Elevation angle arc: from horizontal (right of GS) up to slant range direction -->
+          <path d="M 75 153 A 20 20 0 0 0 68 137" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="78" y="148" font-size="7" fill="#16a34a" id="geo-el-label">el</text>
 
           <!-- Labels -->
           <text x="110" y="85" font-size="8" fill="#ef4444" transform="rotate(-53,110,85)" id="geo-range-label">d</text>
@@ -515,7 +518,7 @@ Link Margin = Eb/N₀_rx − Eb/N₀_req − L_impl</div>
     <div class="section-hdr"><span class="badge-dir">↑ UPLINK</span> A — Signal &amp; Coding Parameters</div>
     <div class="row">
       <div class="lbl">Uplink Frequency</div>
-      <div class="val"><input type="number" id="ul_freq" value="435" min="1" max="100000" step="0.001" oninput="recalc()"></div>
+      <div class="val"><input type="number" id="ul_freq" value="2100" min="1" max="100000" step="0.001" oninput="recalc()"></div>
       <div class="unit">MHz</div>
       <div class="note">Center frequency of uplink signal</div>
     </div>
@@ -588,43 +591,6 @@ Link Margin = Eb/N₀_rx − Eb/N₀_req − L_impl</div>
   <!-- B: Ground TX -->
   <div class="section">
     <div class="section-hdr"><span class="badge-dir">↑ UPLINK</span> B — Ground Station Transmitter</div>
-    <div class="row">
-      <div class="lbl">TX Power</div>
-      <div class="val"><input type="number" id="ul_tx_pwr_input" value="25" min="0.001" max="100000" step="any" oninput="recalc()"></div>
-      <div class="unit">
-        <select id="ul_tx_pwr_unit" data-prev="W" onchange="ulTxPwrUnitChanged(); recalc()" style="width:100%;padding:3px 2px;font-size:.78rem;background:var(--input-bg);border:1px solid #d1d5db;border-radius:4px">
-          <option value="W">W</option>
-          <option value="dBW">dBW</option>
-          <option value="dBm">dBm</option>
-        </select>
-      </div>
-      <div class="note">Transmitter output power at PA — select unit from dropdown</div>
-    </div>
-    <div class="row subrow">
-      <div class="lbl">&nbsp;&nbsp;↳ TX Power</div>
-      <div class="val"><span class="cv" id="ul_tx_pwr_calc1">—</span></div>
-      <div class="unit" id="ul_tx_pwr_unit1">dBW</div>
-      <div class="note" id="ul_tx_pwr_note1">= 10·log₁₀(P_W)</div>
-    </div>
-    <div class="row subrow">
-      <div class="lbl">&nbsp;&nbsp;↳ TX Power</div>
-      <div class="val"><span class="cv" id="ul_tx_pwr_calc2">—</span></div>
-      <div class="unit" id="ul_tx_pwr_unit2">dBm</div>
-      <div class="note" id="ul_tx_pwr_note2">= 10·log₁₀(P_W) + 30</div>
-    </div>
-    <div class="row">
-      <div class="lbl">TX Feeder / Line Loss</div>
-      <div class="val"><input type="number" id="ul_tx_loss" value="0.5" min="0" max="20" step="0.1" oninput="recalc()"></div>
-      <div class="unit">dB</div>
-      <div class="note">Cables, connectors, filters between PA and antenna</div>
-    </div>
-
-    <div class="row">
-      <div class="lbl">TX Antenna Gain</div>
-      <div class="val"><input type="number" id="ul_tx_gain" value="15" min="-10" max="60" step="0.1" oninput="recalc()"></div>
-      <div class="unit">dBi</div>
-      <div class="note"></div>
-    </div>
     <div class="row" style="background:#e8f5e9">
       <div class="lbl"><strong>EIRP</strong></div>
       <div class="val"><input type="number" id="ul_eirp_input" value="28.48" min="-100" max="200" step="0.01" oninput="recalc()"></div>
@@ -861,7 +827,7 @@ Link Margin = Eb/N₀_rx − Eb/N₀_req − L_impl</div>
     <div class="section-hdr"><span class="badge-dir" style="background:#7c3aed">↓ DOWNLINK</span> A — Signal &amp; Coding Parameters</div>
     <div class="row">
       <div class="lbl">Downlink Frequency</div>
-      <div class="val"><input type="number" id="dl_freq" value="145.9" min="1" max="100000" step="0.001" oninput="recalc()"></div>
+      <div class="val"><input type="number" id="dl_freq" value="2243" min="1" max="100000" step="0.001" oninput="recalc()"></div>
       <div class="unit">MHz</div>
       <div class="note">Center frequency of downlink signal</div>
     </div>
@@ -1222,18 +1188,18 @@ Link Margin = Eb/N₀_rx − Eb/N₀_req − L_impl</div>
     <div style="padding:20px">
       <div style="margin-bottom:14px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-          <span style="font-size:.85rem;width:120px;color:#374151">Uplink ↑</span>
-          <div style="flex:1;background:#f1f5f9;border-radius:4px;height:22px;position:relative;overflow:visible">
+          <span style="font-size:.85rem;width:120px;flex-shrink:0;color:#374151">Uplink ↑</span>
+          <div style="flex:1;background:#f1f5f9;border-radius:4px;height:22px;position:relative;overflow:hidden">
             <div id="ul_margin_bar" style="height:100%;border-radius:4px;transition:.3s;min-width:2px"></div>
-            <span id="ul_margin_bar_label" style="position:absolute;right:-50px;top:3px;font-size:.78rem;font-family:var(--mono);font-weight:600">—</span>
           </div>
+          <span id="ul_margin_bar_label" style="width:60px;flex-shrink:0;text-align:right;font-size:.85rem;font-family:var(--mono);font-weight:600;color:#374151">—</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
-          <span style="font-size:.85rem;width:120px;color:#374151">Downlink ↓</span>
-          <div style="flex:1;background:#f1f5f9;border-radius:4px;height:22px;position:relative;overflow:visible">
+          <span style="font-size:.85rem;width:120px;flex-shrink:0;color:#374151">Downlink ↓</span>
+          <div style="flex:1;background:#f1f5f9;border-radius:4px;height:22px;position:relative;overflow:hidden">
             <div id="dl_margin_bar" style="height:100%;border-radius:4px;transition:.3s;min-width:2px"></div>
-            <span id="dl_margin_bar_label" style="position:absolute;right:-50px;top:3px;font-size:.78rem;font-family:var(--mono);font-weight:600">—</span>
           </div>
+          <span id="dl_margin_bar_label" style="width:60px;flex-shrink:0;text-align:right;font-size:.85rem;font-family:var(--mono);font-weight:600;color:#374151">—</span>
         </div>
       </div>
       <div style="font-size:.75rem;color:#94a3b8">
@@ -1477,30 +1443,6 @@ function modChanged(dir) {
   }
 }
 
-// ─── TX Power unit switcher ───────────────────────────────────
-function ulTxPwrUnitChanged() {
-  const sel     = document.getElementById('ul_tx_pwr_unit');
-  const inp     = document.getElementById('ul_tx_pwr_input');
-  const newUnit = sel.value;
-  const prevUnit = sel.dataset.prev || 'W';
-  const prevVal  = parseFloat(inp.value) || 0;
-
-  // Convert existing number to the new unit
-  const prevW = prevUnit === 'W'   ? prevVal :
-                prevUnit === 'dBW' ? Math.pow(10, prevVal / 10) :
-                                     Math.pow(10, (prevVal - 30) / 10);
-  const newVal = newUnit === 'W'   ? prevW :
-                 newUnit === 'dBW' ? 10 * Math.log10(prevW) :
-                                     10 * Math.log10(prevW) + 30;
-
-  inp.value = newUnit === 'W' ? parseFloat(newVal.toFixed(3))
-                              : parseFloat(newVal.toFixed(2));
-  sel.dataset.prev = newUnit;
-
-  // Adjust input constraints
-  if (newUnit === 'W') { inp.min = 0.001; inp.max = 100000; inp.step = 'any'; }
-  else                 { inp.min = -100;  inp.max = 100;    inp.step = 0.01;  }
-}
 
 
 function ulEirpUnitChanged() {
@@ -1562,14 +1504,6 @@ function recalc() {
 
   // ── Uplink ──
   const ul_freq = v('ul_freq');
-  const ul_pwr_unit   = document.getElementById('ul_tx_pwr_unit').value;
-  const ul_pwr_raw    = v('ul_tx_pwr_input');
-  const ul_tx_pwr_w   = ul_pwr_unit === 'W'   ? ul_pwr_raw :
-                        ul_pwr_unit === 'dBW' ? Math.pow(10, ul_pwr_raw / 10) :
-                                                Math.pow(10, (ul_pwr_raw - 30) / 10);
-  const ul_tx_pwr_dbw = W2dBW(ul_tx_pwr_w);
-  const ul_tx_loss    = v('ul_tx_loss');
-  const ul_tx_gain    = v('ul_tx_gain');
 
   const ul_eirp_unit = document.getElementById('ul_eirp_unit').value;
   const ul_eirp_raw  = v('ul_eirp_input');
@@ -1617,28 +1551,6 @@ function recalc() {
   const ul_margin    = ul_ebno_rx - ul_ebno_req - ul_impl_loss;
 
   // Set uplink outputs
-  // Calculated conversions for the two non-selected TX power units
-  const ul_pwr_others = {
-    'W':   [
-      { val: ul_tx_pwr_dbw,      unit: 'dBW', dec: 2, note: '= 10·log₁₀(P_W)' },
-      { val: W2dBm(ul_tx_pwr_w), unit: 'dBm', dec: 2, note: '= 10·log₁₀(P_W) + 30' },
-    ],
-    'dBW': [
-      { val: ul_tx_pwr_w,        unit: 'W',   dec: 3, note: '= 10^(P_dBW / 10)' },
-      { val: W2dBm(ul_tx_pwr_w), unit: 'dBm', dec: 2, note: '= P_dBW + 30' },
-    ],
-    'dBm': [
-      { val: ul_tx_pwr_w,        unit: 'W',   dec: 3, note: '= 10^((P_dBm − 30) / 10)' },
-      { val: ul_tx_pwr_dbw,      unit: 'dBW', dec: 2, note: '= P_dBm − 30' },
-    ],
-  };
-  const [c1, c2] = ul_pwr_others[ul_pwr_unit];
-  setCV('ul_tx_pwr_calc1', c1.val, c1.dec);
-  document.getElementById('ul_tx_pwr_unit1').textContent = c1.unit;
-  document.getElementById('ul_tx_pwr_note1').textContent = c1.note;
-  setCV('ul_tx_pwr_calc2', c2.val, c2.dec);
-  document.getElementById('ul_tx_pwr_unit2').textContent = c2.unit;
-  document.getElementById('ul_tx_pwr_note2').textContent = c2.note;
   setCV('ul_range_ref', d);
   setCV('ul_fspl', ul_fspl_db);
   setCV('ul_total_loss', ul_total_loss);
@@ -1815,9 +1727,9 @@ function recalc() {
     ['Bandwidth',              bw(ul_rf_bw),                     'MHz',   bw(dl_rf_bw_mhz),                'MHz'],
     // § B — Transmitter
     ['§ B — Transmitter'],
-    ['TX Power',               f2(ul_tx_pwr_dbw),                'dBW',   f2(dl_tx_pwr_dbw),               'dBW'],
-    ['TX Feeder Loss',         '−'+f2(ul_tx_loss),               'dB',    '−'+f2(dl_tx_loss),              'dB'],
-    ['TX Antenna Gain',        '+'+f2(ul_tx_gain),               'dBi',   '+'+f2(dl_sat_gain),             'dBi'],
+    ['TX Power',               '—',                              '',      f2(dl_tx_pwr_dbw),               'dBW'],
+    ['TX Feeder Loss',         '—',                              '',      '−'+f2(dl_tx_loss),              'dB'],
+    ['TX Antenna Gain',        '—',                              '',      '+'+f2(dl_sat_gain),             'dBi'],
     ['EIRP',                   f2(ul_eirp),                      'dBW',   f2(dl_eirp),                     'dBW'],
     // § C — Path Losses
     ['§ C — Path Losses'],
